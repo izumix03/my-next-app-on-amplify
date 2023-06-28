@@ -1,5 +1,5 @@
-export default async function SSR( ) {
-    const formattedDate = await date();
+// pages/ssr.js
+export default function SSR({ formattedDate }) {
     return (
         <>
             <h1>Server-side rendered page</h1>
@@ -13,7 +13,7 @@ export default async function SSR( ) {
     );
 }
 
- async function date() {
+export async function getServerSideProps() {
     const renderDate = Date.now();
     const formattedDate = new Intl.DateTimeFormat("en-US", {
         dateStyle: "long",
@@ -22,5 +22,5 @@ export default async function SSR( ) {
     console.log(
         `SSR ran on ${formattedDate}. This will be logged in CloudWatch.`
     );
-    return formattedDate;
+    return { props: { formattedDate } };
 }
