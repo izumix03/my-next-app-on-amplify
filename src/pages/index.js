@@ -1,26 +1,22 @@
-// pages/ssr.js
-export default function SSR({ formattedDate }) {
+export default function Home({ formattedDate }) {
     return (
         <>
-            <h1>Server-side rendered page</h1>
+            <h1>Static page</h1>
+            <p>This page is static. It was built on {formattedDate}.</p>
             <p>
-                This page is server-side rendered. It was rendered on {formattedDate}.
-            </p>
-            <p>
-                <a href="/">View a static page.</a>
+                <a href="/src/pages/index.js">View a server-side rendered page.</a>
             </p>
         </>
     );
 }
 
-export async function getServerSideProps() {
-    const renderDate = Date.now();
+export async function getStaticProps() {
+    const buildDate = Date.now();
     const formattedDate = new Intl.DateTimeFormat("en-US", {
         dateStyle: "long",
         timeStyle: "long",
-    }).format(renderDate);
-    console.log(
-        `SSR ran on ${formattedDate}. This will be logged in CloudWatch.`
-    );
+    }).format(buildDate);
+
     return { props: { formattedDate } };
 }
+
